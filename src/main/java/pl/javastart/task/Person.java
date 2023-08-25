@@ -7,15 +7,9 @@ public class Person {
     private String pesel;
 
     public Person(String firstName, String lastName, int age, String pesel) {
-        if (namesValidationCheck(firstName) || namesValidationCheck(lastName)) {
-            throw new NameUndefinedException();
-        }
-        if (ageValidationCheck(age)) {
-            throw new IncorrectAgeException();
-        }
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAge(age);
         this.pesel = pesel;
     }
 
@@ -24,11 +18,9 @@ public class Person {
     }
 
     public void setFirstName(String firstName) {
-        if (namesValidationCheck(firstName)) {
-            throw new NameUndefinedException();
-        } else {
-            this.firstName = firstName;
-        }
+        validateFirstName(firstName);
+        this.firstName = firstName;
+
     }
 
     public String getLastName() {
@@ -36,11 +28,8 @@ public class Person {
     }
 
     public void setLastName(String lastName) {
-        if (namesValidationCheck(lastName)) {
-            throw new NameUndefinedException();
-        } else {
-            this.lastName = lastName;
-        }
+        validateFirstName(lastName);
+        this.lastName = lastName;
     }
 
     public int getAge() {
@@ -48,11 +37,9 @@ public class Person {
     }
 
     public void setAge(int age) {
-        if (ageValidationCheck(age)) {
-            throw new IncorrectAgeException();
-        } else {
-            this.age = age;
-        }
+        validateAge(age);
+        this.age = age;
+
     }
 
     public String getPesel() {
@@ -62,6 +49,25 @@ public class Person {
     public void setPesel(String pesel) {
         this.pesel = pesel;
     }
+
+    private void validateFirstName(String firstName) {
+        if (namesValidationCheck(firstName)) {
+            throw new NameUndefinedException("Imię");
+        }
+    }
+
+    private void validateLastName(String lastName) {
+        if (namesValidationCheck(lastName)) {
+            throw new NameUndefinedException("Nazwisko");
+        }
+    }
+
+    private void validateAge(int age) {
+        if (ageValidationCheck(age)) {
+            throw new IncorrectAgeException();
+        }
+    }
+
 
     @Override
     public String toString() {
@@ -74,20 +80,10 @@ public class Person {
     }
 
     public boolean namesValidationCheck(String sign) {
-        if (sign == null || sign.length() < 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return (sign == null || sign.length() < 2);
     }
 
     public boolean ageValidationCheck(int number) {
-        if (number < 1) {
-            return  true;
-        } else {
-            return false;
+        return  number < 1;
         }
-
-    }
-
 }
